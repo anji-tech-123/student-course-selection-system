@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Course Selection System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">🎓 Student Course Selection</div>
+
+        <div class="nav-links" role="navigation" aria-label="Main navigation">
+            <button type="button" class="nav-link is-active" data-view-target="dashboard" aria-current="page">Dashboard</button>
+            <button type="button" class="nav-link" data-view-target="courses">Courses</button>
+            <button type="button" class="nav-link" data-view-target="set-operations">Set Operations</button>
+            <button type="button" class="nav-link" data-view-target="schedule">Schedule</button>
+        </div>
+    </nav>
+
+    <main>
+        <div id="dashboard" class="view">
+            <!-- Hero Section -->
+            <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <p class="welcome">WELCOME STUDENT 👋</p>
+
+            <h1>
+                Student Course<br>
+                <span>Selection System</span>
+            </h1>
+
+            <p class="description">
+                Select courses, check schedule conflicts,
+                explore recommendations and track your
+                academic requirements.
+            </p>
+
+            <div class="hero-buttons">
+                    <a href="#courses" class="primary-btn" data-view-target="courses">
+                    Explore Courses
+                </a>
+
+                    <a href="#recommendations" class="secondary-btn" data-view-target="recommendations">
+                        View Recommendations
+                </a>
+            </div>
+
+        </div>
+
+            </section>
+
+
+    <!-- Dashboard Section -->
+            <section class="dashboard">
+
+        <h2>Student Dashboard</h2>
+
+        <div class="dashboard-cards">
+
+            <div class="card">
+                <div class="card-icon">📚</div>
+                <h3>Courses</h3>
+                <p>24</p>
+                <span>Courses Available</span>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">✅</div>
+                <h3>Completed</h3>
+                <p>18</p>
+                <span>Courses Completed</span>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>Requirements</h3>
+                <p>6</p>
+                <span>Courses Remaining</span>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⭐</div>
+                <h3>CGPA</h3>
+                <p>8.4</p>
+                <span>Current CGPA</span>
+            </div>
+
+        </div>
+
+            </section>
+
+        </div>
+
+        <section id="recommendations" class="section recommendation-section view" hidden>
+            <h2>🤖 Recommended For You</h2>
+            <p class="section-description">Courses recommended using SQL-style UNION operations.</p>
+            <div id="recommendation-list" class="recommendation-list"></div>
+        </section>
+
+
+    <!-- Courses Section -->
+    <section id="courses" class="section view" hidden>
+
+        <h2>Available Courses</h2>
+
+        <p class="section-description">
+            Browse and select courses for your semester.
+        </p>
+
+        <div class="course-tools">
+            <label class="course-search" for="course-search">
+                <span>Search by course name</span>
+                <input
+                    id="course-search"
+                    type="search"
+                    placeholder="e.g. Machine Learning"
+                    oninput="filterCourses()">
+            </label>
+
+            <div class="course-filters" role="group" aria-label="Filter courses by type">
+                <button
+                    type="button"
+                    class="course-filter"
+                    data-course-filter="all"
+                    aria-pressed="true"
+                    onclick="filterCourses('all')">
+                    All Courses
+                </button>
+                <button
+                    type="button"
+                    class="course-filter"
+                    data-course-filter="core"
+                    aria-pressed="false"
+                    onclick="filterCourses('core')">
+                    Core
+                </button>
+                <button
+                    type="button"
+                    class="course-filter"
+                    data-course-filter="elective"
+                    aria-pressed="false"
+                    onclick="filterCourses('elective')">
+                    Elective
+                </button>
+            </div>
+        </div>
+
+        <div class="course-container">
+
+            <div class="course-card" data-meetings='[{"day":"Monday","start":"10:00","end":"11:00"},{"day":"Wednesday","start":"10:00","end":"11:00"}]'>
+                <span class="course-type core">CORE</span>
+                <h3>Database Management Systems</h3>
+                <p>Course ID: CS301</p>
+                <p>Credits: 4</p>
+                <button type="button" aria-pressed="false" onclick="selectCourse('Database Management Systems', this)">
+                    Select Course
+                </button>
+            </div>
+
+            <div class="course-card" data-meetings='[{"day":"Tuesday","start":"11:00","end":"12:00"}]'>
+                <span class="course-type core">CORE</span>
+                <h3>Machine Learning</h3>
+                <p>Course ID: AIML301</p>
+                <p>Credits: 4</p>
+                <button type="button" aria-pressed="false" onclick="selectCourse('Machine Learning', this)">
+                    Select Course
+                </button>
+            </div>
+
+            <div class="course-card" data-meetings='[{"day":"Monday","start":"10:00","end":"11:00"}]'>
+                <span class="course-type core">CORE</span>
+                <h3>Data Structures</h3>
+                <p>Course ID: CS201</p>
+                <p>Credits: 4</p>
+                <button type="button" aria-pressed="false" onclick="selectCourse('Data Structures', this)">
+                    Select Course
+                </button>
+            </div>
+
+            <div class="course-card" data-meetings='[{"day":"Thursday","start":"10:00","end":"11:00"}]'>
+                <span class="course-type core">CORE</span>
+                <h3>Operating Systems</h3>
+                <p>Course ID: CS302</p>
+                <p>Credits: 4</p>
+                <button type="button" aria-pressed="false" onclick="selectCourse('Operating Systems', this)">
+                    Select Course
+                </button>
+            </div>
+
+            <div class="course-card" data-meetings='[{"day":"Thursday","start":"11:00","end":"12:00"}]'>
+                <span class="course-type core">CORE</span>
+                <h3>Computer Networks</h3>
+                <p>Course ID: CS303</p>
+                <p>Credits: 4</p>
+                <button type="button" aria-pressed="false" onclick="selectCourse('Computer Networks', this)">
+                    Select Course
+                </button>
+            </div>
+
+            <div class="course-card" data-meetings='[{"day":"Friday","start":"10:00","end":"11:00"}]'>
+                <span class="course-type elective">ELECTIVE</span>
+                <h3>Cloud Computing</h3>
+                <p>Course ID: CS402</p>
+                <p>Credits: 3</p>
+                <button type="button" aria-pressed="false" onclick="selectCourse('Cloud Computing', this)">
+                    Select Course
+                </button>
+            </div>
+
+            <div class="course-card" data-meetings='[{"day":"Tuesday","start":"11:00","end":"12:00"}]'>
+                <span class="course-type elective">ELECTIVE</span>
+                <h3>Cyber Security</h3>
+                <p>Course ID: CS403</p>
+                <p>Credits: 3</p>
+                <button type="button" aria-pressed="false" onclick="selectCourse('Cyber Security', this)">
+                    Select Course
+                </button>
+            </div>
+
+            <div class="course-card" data-meetings='[{"day":"Tuesday","start":"12:00","end":"13:00"}]'>
+                <span class="course-type elective">ELECTIVE</span>
+                <h3>Data Mining</h3>
+                <p>Course ID: CS404</p>
+                <p>Credits: 3</p>
+                <button type="button" aria-pressed="false" onclick="selectCourse('Data Mining', this)">
+                    Select Course
+                </button>
+            </div>
+
+            <div class="course-card" data-meetings='[{"day":"Wednesday","start":"11:00","end":"12:00"}]'>
+                <span class="course-type elective">ELECTIVE</span>
+                <h3>Artificial Intelligence</h3>
+                <p>Course ID: AIML402</p>
+                <p>Credits: 3</p>
+                <button type="button" aria-pressed="false" onclick="selectCourse('Artificial Intelligence', this)">
+                    Select Course
+                </button>
+            </div>
+
+        </div>
+
+        <p id="course-empty-state" class="course-empty-state" hidden>
+            No courses match your search and filter.
+        </p>
+
+        <div class="selected-courses">
+            <div class="selected-courses-header">
+                <h3>My Selected Courses</h3>
+                <span id="selected-course-count" aria-live="polite">0 selected</span>
+            </div>
+
+            <div class="credit-summary" aria-label="Semester credit summary">
+                <div class="credit-summary-item">
+                    <span>Selected Credits</span>
+                    <strong id="selected-credits">0</strong>
+                </div>
+                <div class="credit-summary-item">
+                    <span>Maximum Credits</span>
+                    <strong id="maximum-credits">8</strong>
+                </div>
+                <div class="credit-summary-item">
+                    <span>Remaining Credits</span>
+                    <strong id="remaining-credits">8</strong>
+                </div>
+            </div>
+
+            <p id="credit-limit-message" class="credit-limit-message" role="status" aria-live="polite" hidden></p>
+
+            <div id="selected-courses-list" class="selected-courses-list" aria-live="polite">
+                <p class="empty-selection">No courses selected yet.</p>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="section view" hidden>
+
+        <h2>📅 My Schedule</h2>
+
+        <div id="schedule-list" class="schedule-box" aria-live="polite">
+            <p class="schedule-empty-state">No courses selected.</p>
+        </div>
+
+        <div class="schedule-conflict-check">
+            <button
+                type="button"
+                class="operation-button schedule-conflict-button"
+                onclick="checkScheduleConflict()">
+                Check Schedule Conflicts
+            </button>
+
+            <div
+                id="schedule-conflict-result"
+                class="operation-result schedule-conflict-result"
+                aria-live="polite">
+            </div>
+        </div>
+
+    </section>
+<!-- DML Set Operations Section -->
+
+<section id="set-operations" class="section set-operations view" hidden>
+
+    <header class="set-page-header">
+        <div>
+            <p class="workspace-eyebrow">ACADEMIC DATA / DML WORKSPACE</p>
+            <h2>Set Operations</h2>
+            <p class="section-description">Compare course relations and inspect the resulting sets.</p>
+        </div>
+        <span class="workspace-status"><span class="workspace-status-dot"></span> LIVE COURSE DATA</span>
+    </header>
+
+    <div class="set-workspace">
+        <fieldset class="set-picker recommendation-picker">
+            <legend>Recommendation relations</legend>
+            <label>
+                <input type="checkbox" name="recommendation-set" value="major" checked>
+                <span class="relation-copy"><strong>Major requirements</strong><small>MAJOR_COURSES · 3 rows</small></span>
+            </label>
+            <label>
+                <input type="checkbox" name="recommendation-set" value="popular" checked>
+                <span class="relation-copy"><strong>Popular courses</strong><small>POPULAR_COURSES · 3 rows</small></span>
+            </label>
+            <label>
+                <input type="checkbox" name="recommendation-set" value="elective" checked>
+                <span class="relation-copy"><strong>Electives</strong><small>ELECTIVE_COURSES · 3 rows</small></span>
+            </label>
+        </fieldset>
+        <fieldset class="set-picker completed-picker">
+            <legend>Completed requirements</legend>
+            <div id="completed-course-options" class="completed-course-options"></div>
+        </fieldset>
+    </div>
+
+    <div class="degree-gap-summary">
+        <div>
+            <h3>Remaining degree requirements</h3>
+            <p>Required courses that are neither selected nor marked complete.</p>
+        </div>
+        <div id="degree-gap-result" class="operation-result" aria-live="polite"></div>
+    </div>
+
+    <div class="set-definitions" aria-label="Set definitions">
+        <span><strong>A</strong> Selected courses</span>
+        <span><strong>B</strong> Courses in checked recommendation relations</span>
+        <span><strong>U</strong> All available courses</span>
+    </div>
+
+    <div class="operation-grid">
+        <article class="operation-box union-operation">
+            <div class="operation-header union-header">
+                <span class="operation-symbol">∪</span>
+                <div><h3>UNION</h3><p>A ∪ B</p></div>
+            </div>
+            <div class="operation-content">
+                <code class="operation-query">A ∪ B</code>
+                <p>Combine selected and recommended courses, keeping each course once.</p>
+                <button type="button" class="operation-button" onclick="displayCourseSetOperation('union')">Run UNION</button>
+                <div id="union-result" class="operation-result" aria-live="polite"></div>
+            </div>
+        </article>
+
+        <article class="operation-box intersect-operation">
+            <div class="operation-header intersect-header">
+                <span class="operation-symbol">∩</span>
+                <div><h3>INTERSECTION</h3><p>A ∩ B</p></div>
+            </div>
+            <div class="operation-content">
+                <code class="operation-query">A ∩ B</code>
+                <p>Show courses that are both selected and recommended.</p>
+                <button type="button" class="operation-button" onclick="displayCourseSetOperation('intersection')">Run INTERSECTION</button>
+                <div id="intersect-result" class="operation-result" aria-live="polite"></div>
+            </div>
+        </article>
+
+        <article class="operation-box except-operation">
+            <div class="operation-header except-header">
+                <span class="operation-symbol">−</span>
+                <div><h3>EXCEPT / DIFFERENCE</h3><p>A − B</p></div>
+            </div>
+            <div class="operation-content">
+                <code class="operation-query">A − B</code>
+                <p>Show selected courses that are not in the recommendation set.</p>
+                <button type="button" class="operation-button" onclick="displayCourseSetOperation('difference')">Run DIFFERENCE</button>
+                <div id="except-result" class="operation-result" aria-live="polite"></div>
+            </div>
+        </article>
+
+        <article class="operation-box reverse-difference-operation">
+            <div class="operation-header reverse-difference-header">
+                <span class="operation-symbol">↔</span>
+                <div><h3>REVERSE DIFFERENCE</h3><p>B − A</p></div>
+            </div>
+            <div class="operation-content">
+                <code class="operation-query">B − A</code>
+                <p>Show recommended courses that are not currently selected.</p>
+                <button type="button" class="operation-button" onclick="displayCourseSetOperation('reverseDifference')">Run REVERSE DIFFERENCE</button>
+                <div id="reverse-difference-result" class="operation-result" aria-live="polite"></div>
+            </div>
+        </article>
+
+        <article class="operation-box symmetric-difference-operation">
+            <div class="operation-header symmetric-difference-header">
+                <span class="operation-symbol">△</span>
+                <div><h3>SYMMETRIC DIFFERENCE</h3><p>A △ B</p></div>
+            </div>
+            <div class="operation-content">
+                <code class="operation-query">(A − B) ∪ (B − A)</code>
+                <p>Show courses found in exactly one of the two sets.</p>
+                <button type="button" class="operation-button" onclick="displayCourseSetOperation('symmetricDifference')">Run SYMMETRIC DIFFERENCE</button>
+                <div id="symmetric-difference-result" class="operation-result" aria-live="polite"></div>
+            </div>
+        </article>
+
+        <article class="operation-box cartesian-product-operation">
+            <div class="operation-header cartesian-product-header">
+                <span class="operation-symbol">×</span>
+                <div><h3>CARTESIAN PRODUCT</h3><p>A × B</p></div>
+            </div>
+            <div class="operation-content">
+                <code class="operation-query">A × B</code>
+                <p>Create an ordered pair for every course in A with every course in B.</p>
+                <button type="button" class="operation-button" onclick="displayCourseSetOperation('cartesianProduct')">Run CARTESIAN PRODUCT</button>
+                <div id="cartesian-product-result" class="operation-result" aria-live="polite"></div>
+            </div>
+        </article>
+
+        <article class="operation-box complement-operation">
+            <div class="operation-header complement-header">
+                <span class="operation-symbol">′</span>
+                <div><h3>COMPLEMENT</h3><p>A′ = U − A</p></div>
+            </div>
+            <div class="operation-content">
+                <code class="operation-query">U − A</code>
+                <p>Show every available course that is not selected.</p>
+                <button type="button" class="operation-button" onclick="displayCourseSetOperation('complement')">Run COMPLEMENT</button>
+                <div id="complement-result" class="operation-result" aria-live="polite"></div>
+            </div>
+        </article>
+    </div>
+
+</section>
+
+    <!-- Footer -->
+    <footer class="view" hidden>
+
+        <h3>🎓 Student Course Selection System</h3>
+
+        <p>
+            DBMS / DML Mini Project
+        </p>
+
+        <p>
+            Designed by Anji
+        </p>
+
+    </footer>
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
